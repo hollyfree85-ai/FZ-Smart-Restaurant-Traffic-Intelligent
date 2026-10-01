@@ -1,0 +1,25 @@
+FZ Smart Restaurant Traffic Intelligent — PWA 2.2.0 QA
+
+PASS — app.js JavaScript syntax
+PASS — external-signals.js JavaScript syntax
+PASS — api/google-live.js JavaScript syntax
+PASS — sw.js JavaScript syntax
+PASS — manifest.webmanifest JSON parse
+PASS — vercel.json JSON parse
+PASS — package.json JSON parse
+PASS — Google request timestamp cache-buster removed
+PASS — Vercel /api no-store override removed
+PASS — exact restaurant data_cid retained
+PASS — successful Popular Times saved as last-known-good local cache
+PASS — failed/empty Google fetch does not overwrite local Popular Times
+PASS — empty Popular Times API response returns 503 instead of cacheable success
+PASS — shared Vercel CDN cache policy enabled for scheduled Google requests
+PASS — quota-safe schedule 10:00 / 12:00 / 14:00 / 16:00 / 18:00 / 20:00 CT retained
+PASS — manual Google check can cover a nearby scheduled slot within 90 minutes
+PASS — Google live busyness remains optional; no fabricated live score
+PASS — mobile vertical-scroll hotfix retained
+PASS — service-worker cache version bumped to 2.2.0
+PASS — Quick Board source remains read-only
+
+Deployment requirement:
+SERPAPI_KEY must remain configured in Vercel.

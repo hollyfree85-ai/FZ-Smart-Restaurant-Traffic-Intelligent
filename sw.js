@@ -1,4 +1,4 @@
-const VERSION='2.1.3-mobile-scroll';
+const VERSION='2.2.0-popular-times-retained';
 const STATIC_CACHE=`fz-traffic-static-${VERSION}`;
 const RUNTIME_CACHE=`fz-traffic-runtime-${VERSION}`;
 const APP_SHELL=[
@@ -18,7 +18,7 @@ self.addEventListener('fetch',event=>{
   const req=event.request;
   if(req.method!=='GET') return;
   const url=new URL(req.url);
-  // Never cache the Google Live bridge. It must always be fresh.
+  // Google API responses stay network-side; Vercel CDN owns the shared quota cache.
   if(url.origin===location.origin && url.pathname.startsWith('/api/')){
     event.respondWith(fetch(req)); return;
   }

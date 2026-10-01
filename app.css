@@ -72,3 +72,6 @@ body{
     -webkit-overflow-scrolling:touch;
   }
 }
+
+/* === PWA 2.2.0 GOOGLE LAST-KNOWN-GOOD === */
+.google-badge.cached{background:#fff4df;color:#a26706}.google-badge.waiting{background:#edf3fa;color:#62779a}.google-live-card .note{line-height:1.55}
