@@ -1,0 +1,8 @@
+PWA 2.3.0 validation
+PASS — Quick Board remains read-only
+PASS — Realtime listener covers current AM board, PM board, current AM/PM archive, tables, and reservations
+PASS — Live event triggers debounced Quick Board live refresh
+PASS — Full forecast data is kept separate from realtime operational data
+PASS — Tables Today and Last 60 Minutes are shown separately
+PASS — Forecast model scheduled refresh remains controlled by liveUpdateMinutes (default 15)
+PASS — Service worker cache namespace bumped to 2.3.0
