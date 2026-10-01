@@ -7,7 +7,7 @@ const CACHE=new WeakMap();
 
 export const DEFAULT_SETTINGS={
   avgDiningMinutes:75,targetTablesPerServer:4,recencyHalfLifeDays:56,liveUpdateMinutes:15,forecastDays:30,
-  weekdayAM:2,weekdayPM:5,fridayAM:2,fridayPM:8,saturdayAM:5,saturdayPM:9,sundayAM:5,sundayPM:7,externalEndpoint:'/api/google-live',externalRefreshMinutes:15,externalPatternWeight:18,externalLiveWeight:35
+  weekdayAM:2,weekdayPM:5,fridayAM:2,fridayPM:8,saturdayAM:5,saturdayPM:9,sundayAM:5,sundayPM:7,externalEndpoint:'/api/google-live',externalRefreshMinutes:15,externalPatternWeight:18,externalLiveWeight:35,eventEndpoint:'/api/local-events',eventMaxUpliftPct:12
 };
 
 export function dayOfWeek(date){const[y,m,d]=date.split('-').map(Number);return new Date(Date.UTC(y,m-1,d,12)).getUTCDay()}

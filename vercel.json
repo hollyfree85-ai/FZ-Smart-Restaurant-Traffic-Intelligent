@@ -2,6 +2,9 @@
   "functions": {
     "api/google-live.js": {
       "maxDuration": 20
+    },
+    "api/local-events.js": {
+      "maxDuration": 20
     }
   },
   "headers": [

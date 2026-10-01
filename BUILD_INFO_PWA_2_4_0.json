@@ -1,0 +1,26 @@
+{
+  "version": "2.4.0",
+  "name": "FZ Smart Restaurant Traffic Intelligent",
+  "release": "Local Event Impact Intelligence",
+  "data_sources": [
+    "FZ Persistent Seating Ledger",
+    "Google Maps Popular Times/live busyness via SerpApi",
+    "Google Search structured local event results via SerpApi"
+  ],
+  "event_area": "Huntsville, Madison, nearby North Alabama",
+  "event_auto_schedule": "first app use after 8:30 AM America/Chicago; max once per device/day; stable daily URL for CDN reuse",
+  "google_maps_schedule": "10:00,12:00,14:00,16:00,18:00,20:00 America/Chicago",
+  "default_event_uplift_cap_pct": 12,
+  "sha256": {
+    "app.js": "375d38b1d2d64544e3b10ea67c91aa813149f97faaa69e646bc12a2bf7f8ec07",
+    "app.css": "0f3e061c6844f2688a6868b42fb2445d203cf2f68cf0be634fcb4d3c86b83927",
+    "event-signals.js": "d412fc315a1751cc3f6f98d54ff7f0d31f84247b517f3f8d62307f84f5407445",
+    "forecast-engine.js": "83435fcde378850a78c7bfec741174e8e9104e8c208eddbec1fe1e016e283e4f",
+    "index.html": "f753bf491dc0adc7e6dedf216a99cbd0a89db52174398253362216461abcb644",
+    "manifest.webmanifest": "59eccce0e22390bcfbb324031ea0e94fb03a5803406e0e195addcfcc096dd202",
+    "sw.js": "c16b34a4cba30a96ea4f5c82e1139da895ba45611af38505a14feb888bab331d",
+    "package.json": "9aed208f8c0b9801cd7a7c7ac7201a9f30d7f1e3726984bd43e4194153147b48",
+    "vercel.json": "16547b289872cc86c897d206787e4cd88091ce5bdd12c794cbe3ded265c302be",
+    "api/local-events.js": "25835daf55764970476bcbf1a3b0c03eee60ace50a06c890194b996fbc1083fa"
+  }
+}

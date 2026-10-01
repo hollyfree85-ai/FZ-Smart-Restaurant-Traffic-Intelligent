@@ -16,7 +16,8 @@
     <nav id="nav">
       <button class="active" data-view="dashboard"><span>⌂</span>Dashboard</button>
       <button data-view="live"><span>◉</span>Live Forecast</button>
-      <button data-view="google"><span>G</span>Google Live Traffic</button><button data-view="daily"><span>▣</span>Daily / Hourly</button>
+      <button data-view="google"><span>G</span>Google Live Traffic</button>
+      <button data-view="events"><span>🎟</span>Local Event Impact</button><button data-view="daily"><span>▣</span>Daily / Hourly</button>
       <button data-view="calendar"><span>▦</span>30-Day Calendar</button>
       <button data-view="staffing"><span>♟</span>Staffing Intelligence</button>
       <button data-view="advisor"><span>☕</span>Break & Cut Advisor</button>
@@ -24,7 +25,7 @@
       <button data-view="accuracy"><span>↗</span>Forecast vs Actual</button>
       <button data-view="settings"><span>⚙</span>Model Settings</button>
     </nav>
-    <div class="source-box"><small>PWA 2.3.0 • LIVE DATA SOURCES</small><b>FZ Persistent Seating Ledger</b><span id="boardStatus">CONNECTING</span><b class="google-source">Google Maps Popular Times</b><span id="googleStatus">CONNECTING</span><span id="lastSync">—</span></div>
+    <div class="source-box"><small>PWA 2.4.0 • LIVE DATA SOURCES</small><b>FZ Persistent Seating Ledger</b><span id="boardStatus">CONNECTING</span><b class="google-source">Google Maps Popular Times</b><span id="googleStatus">CONNECTING</span><b class="event-source">Local Event Watch</b><span id="eventStatus">CONNECTING</span><span id="lastSync">—</span></div>
   </aside>
   <main>
     <header>
@@ -36,6 +37,7 @@
     <section id="dashboard" class="view"></section>
     <section id="live" class="view hidden"></section>
     <section id="google" class="view hidden"></section>
+    <section id="events" class="view hidden"></section>
     <section id="daily" class="view hidden"></section>
     <section id="calendar" class="view hidden"></section>
     <section id="staffing" class="view hidden"></section>
@@ -43,7 +45,7 @@
     <section id="history" class="view hidden"></section>
     <section id="accuracy" class="view hidden"></section>
     <section id="settings" class="view hidden"></section>
-    <footer>FZ Smart Restaurant Traffic Intelligent • PWA 2.3.0 • Google Live + FZ Forecast • Forecasts support Manager decisions; staffing and cuts are never executed automatically.</footer>
+    <footer>FZ Smart Restaurant Traffic Intelligent • PWA 2.4.0 • Google Live + Local Events + FZ Forecast • Forecasts support Manager decisions; staffing and cuts are never executed automatically.</footer>
   </main>
 </div>
 <div id="installHelp" class="install-modal hidden"><div class="install-modal-card"><div class="install-mark">FZ</div><h2>Install FZ Traffic</h2><div id="installHelpText"></div><button id="installHelpClose" class="primary" type="button">CLOSE</button></div></div><script src="pwa.js"></script><script type="module" src="app.js"></script>

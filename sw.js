@@ -1,9 +1,9 @@
-const VERSION='2.3.0-persistent-seating-ledger';
+const VERSION='2.4.0-local-event-impact';
 const STATIC_CACHE=`fz-traffic-static-${VERSION}`;
 const RUNTIME_CACHE=`fz-traffic-runtime-${VERSION}`;
 const APP_SHELL=[
   '/', '/index.html', '/app.css', '/app.js', '/pwa.js', '/forecast-engine.js',
-  '/external-signals.js', '/data-adapter.js', '/manifest.webmanifest',
+  '/external-signals.js', '/event-signals.js', '/data-adapter.js', '/manifest.webmanifest',
   '/icon-96.png', '/icon-192.png', '/icon-512.png', '/icon-maskable-512.png',
   '/apple-touch-icon.png'
 ];

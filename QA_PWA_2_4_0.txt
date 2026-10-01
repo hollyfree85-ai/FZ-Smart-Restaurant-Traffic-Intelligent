@@ -1,0 +1,25 @@
+FZ SMART RESTAURANT TRAFFIC INTELLIGENT — PWA 2.4.0 QA
+
+PASS — app.js syntax
+PASS — event-signals.js syntax
+PASS — api/local-events.js syntax
+PASS — service worker syntax
+PASS — forecast-engine.js syntax
+PASS — no unresolved static DOM IDs
+PASS — Local Event Impact navigation + page exists
+PASS — Event status source indicator exists
+PASS — event-signals.js is in PWA app shell
+PASS — /api/local-events is configured as a Vercel function
+PASS — SERPAPI_KEY stays server-side; browser event module contains no API key
+PASS — automatic event schedule is once/day after 8:30 AM CT per device
+PASS — daily endpoint URL is stable for CDN reuse
+PASS — event forecast uplift is capped by eventMaxUpliftPct (default 12%)
+PASS — synthetic high-impact event raises only relevant time-window slots
+PASS — synthetic event API normalization: date/time/category/impact/venue
+PASS — Persistent Seating Ledger retained from PWA 2.3.0
+PASS — Google Popular Times last-known-good retained from PWA 2.2.0
+PASS — Google Maps quota-safe 6x/day schedule retained
+PASS — Mobile vertical scroll hotfix retained
+
+Live limitation:
+The build environment does not contain the user's private SERPAPI_KEY, so a live SerpApi event search was not executed here. The endpoint uses the same Vercel SERPAPI_KEY already configured for Google Maps traffic.
