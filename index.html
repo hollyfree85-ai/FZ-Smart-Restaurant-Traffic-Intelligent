@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#1478ff"><meta name="description" content="Live restaurant traffic forecast and intelligence for The Juicy Seafood and Bar."><meta name="application-name" content="FZ Traffic"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="FZ Traffic"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="icon" href="/icon-192.png"><title>FZ Smart Restaurant Traffic Intelligent</title><link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="app.css"></head>
+<body>
+<div id="loginView" class="login-view">
+  <div class="login-card">
+    <div class="logo-row"><div class="fz-logo">FZ</div><div><h1>Smart Restaurant<br>Traffic Intelligent</h1><p>Predict Today. Plan Tomorrow. Grow Smarter.</p></div></div>
+    <div class="login-note">Owner-only • Read-only Quick Board connection</div>
+    <label>Owner username / email<input id="user" autocomplete="username" placeholder="Owner username"></label>
+    <label>Password<input id="pass" type="password" autocomplete="current-password" placeholder="Password"></label>
+    <button id="loginBtn" class="primary">OPEN INTELLIGENCE</button><button id="installBtnLogin" class="install-button" type="button">⬇ Install App</button><div id="loginMsg" class="msg"></div><div class="pwa-note">Install once • Opens full screen • Owner login can stay signed in</div>
+  </div>
+</div>
+<div id="app" class="app hidden">
+  <aside>
+    <div class="side-brand"><div class="fz-logo small">FZ</div><div><b>Smart Restaurant</b><b>Traffic Intelligent</b><small>Forecast & Business Intelligence</small></div></div>
+    <nav id="nav">
+      <button class="active" data-view="dashboard"><span>⌂</span>Dashboard</button>
+      <button data-view="live"><span>◉</span>Live Forecast</button>
+      <button data-view="google"><span>G</span>Google Live Traffic</button><button data-view="daily"><span>▣</span>Daily / Hourly</button>
+      <button data-view="calendar"><span>▦</span>30-Day Calendar</button>
+      <button data-view="staffing"><span>♟</span>Staffing Intelligence</button>
+      <button data-view="advisor"><span>☕</span>Break & Cut Advisor</button>
+      <button data-view="history"><span>▥</span>Historical Analytics</button>
+      <button data-view="accuracy"><span>↗</span>Forecast vs Actual</button>
+      <button data-view="settings"><span>⚙</span>Model Settings</button>
+    </nav>
+    <div class="source-box"><small>PWA 2.1.0 • LIVE DATA SOURCES</small><b>FZ Quick Board R3M.8.39</b><span id="boardStatus">CONNECTING</span><b class="google-source">Google Maps Popular Times</b><span id="googleStatus">CONNECTING</span><span id="lastSync">—</span></div>
+  </aside>
+  <main>
+    <header>
+      <div class="head-left"><div id="todayLabel" class="today-label"></div><div><strong id="clock"></strong><span class="live-badge">● LIVE</span></div></div>
+      <div class="restaurant"><b>The Juicy Seafood and Bar</b><span>Huntsville, Alabama</span></div>
+      <div class="head-actions"><button id="installBtn" class="soft install-header" type="button">⬇ Install App</button><button id="refreshBtn" class="soft">↻ Refresh</button><button id="logoutBtn" class="soft">Owner ▾</button></div>
+    </header>
+    <div id="banner" class="banner hidden"></div>
+    <section id="dashboard" class="view"></section>
+    <section id="live" class="view hidden"></section>
+    <section id="google" class="view hidden"></section>
+    <section id="daily" class="view hidden"></section>
+    <section id="calendar" class="view hidden"></section>
+    <section id="staffing" class="view hidden"></section>
+    <section id="advisor" class="view hidden"></section>
+    <section id="history" class="view hidden"></section>
+    <section id="accuracy" class="view hidden"></section>
+    <section id="settings" class="view hidden"></section>
+    <footer>FZ Smart Restaurant Traffic Intelligent • PWA 2.1.0 • Google Live + FZ Forecast • Forecasts support Manager decisions; staffing and cuts are never executed automatically.</footer>
+  </main>
+</div>
+<div id="installHelp" class="install-modal hidden"><div class="install-modal-card"><div class="install-mark">FZ</div><h2>Install FZ Traffic</h2><div id="installHelpText"></div><button id="installHelpClose" class="primary" type="button">CLOSE</button></div></div><script src="pwa.js"></script><script type="module" src="app.js"></script>
+</body></html>

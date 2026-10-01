@@ -1,0 +1,19 @@
+FZ Smart Restaurant Traffic Intelligent — Google Live PWA 2.1.0
+
+PASS — app.js syntax
+PASS — external-signals.js syntax
+PASS — forecast-engine.js syntax
+PASS — data-adapter.js syntax
+PASS — api/google-live.js syntax
+PASS — service worker syntax
+PASS — Google Live navigation and page present
+PASS — Google Place ID locked to Huntsville restaurant
+PASS — Popular Times parser present
+PASS — live_busyness_score parser present
+PASS — API credential uses server environment SERPAPI_KEY
+PASS — no SerpApi secret embedded in frontend
+PASS — FZ forecast + Google external blending unit test
+PASS — SerpApi response normalization unit test
+PASS — Quick Board remains read-only
+
+Not live-tested against SerpApi production because no user's SERPAPI_KEY was provided.

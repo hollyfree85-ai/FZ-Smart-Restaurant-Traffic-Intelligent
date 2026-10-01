@@ -1,0 +1,28 @@
+FZ SMART RESTAURANT TRAFFIC INTELLIGENT — GOOGLE LIVE PWA 2.1.0
+
+DEPLOY FIRST
+1. Deploy this folder to Vercel.
+2. In Vercel Project > Settings > Environment Variables, add SERPAPI_KEY.
+3. Redeploy if the environment variable was added after the first deployment.
+4. Open the HTTPS Vercel URL.
+
+INSTALL
+ANDROID / SAMSUNG
+- Open the Vercel URL in Chrome or Samsung Internet.
+- Tap INSTALL APP in FZ Traffic. If the native prompt is not shown, use browser menu > Install app / Add page to > Home screen.
+
+IPHONE / IPAD
+- Open the Vercel URL in Safari.
+- Tap Share.
+- Tap Add to Home Screen.
+- Tap Add.
+
+WINDOWS / MAC
+- Open the URL in Chrome or Edge.
+- Tap INSTALL APP or the install icon in the browser address bar.
+
+AFTER INSTALL
+- The app opens in standalone mode without normal browser chrome.
+- Owner login uses persistent Firebase browser login until logout/session invalidation.
+- Quick Board and Google Live still require internet for fresh operational data.
+- /api/google-live is never cached by the PWA service worker.

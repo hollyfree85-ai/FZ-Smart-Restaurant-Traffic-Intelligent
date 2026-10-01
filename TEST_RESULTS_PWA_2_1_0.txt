@@ -1,0 +1,22 @@
+FZ SMART RESTAURANT TRAFFIC INTELLIGENT — GOOGLE LIVE PWA 2.1.0
+
+PWA PACKAGE QA
+PASS — app.js syntax
+PASS — pwa.js syntax
+PASS — sw.js syntax
+PASS — api/google-live.js syntax
+PASS — manifest JSON parse
+PASS — Vercel JSON parse
+PASS — manifest has id, start_url, root scope, standalone display
+PASS — manifest includes 192x192 and 512x512 icons
+PASS — manifest includes maskable icon
+PASS — Apple touch icon included
+PASS — service worker registers before Owner authentication
+PASS — Install App controls exist on login and authenticated header
+PASS — iPhone/iPad install guidance is included
+PASS — Google Live /api route is explicitly network-only in service worker
+PASS — Firebase/Google operational data is not application-cached
+PASS — same Firebase Owner auth remains browserLocalPersistence
+PASS — Google Live backend remains server-side with SERPAPI_KEY
+
+Important: iOS Safari does not expose the browser beforeinstallprompt API; installation there uses Share > Add to Home Screen.

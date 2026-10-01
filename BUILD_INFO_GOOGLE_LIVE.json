@@ -1,0 +1,14 @@
+{
+  "version": "2.1.0",
+  "name": "FZ Smart Restaurant Traffic Intelligent \u2014 Google Live PWA",
+  "quickBoard": "R3M.8.39",
+  "googlePlaceId": "ChIJmxtIi39rYogRSvt3otrmncA",
+  "externalProvider": "SerpApi Google Maps Place Results popular_times",
+  "refreshMinutes": 15,
+  "mode": "read-only sources + prediction fusion",
+  "pwa": true,
+  "pwaDisplay": "standalone",
+  "serviceWorker": "/sw.js",
+  "installScope": "/",
+  "googleApiCache": "network-only"
+}

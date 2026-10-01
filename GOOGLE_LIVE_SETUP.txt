@@ -1,0 +1,19 @@
+FZ SMART RESTAURANT TRAFFIC INTELLIGENT — GOOGLE LIVE PWA 2.1.0
+
+REQUIRED FOR LIVE GOOGLE MAPS POPULAR TIMES:
+1. Deploy this whole folder to Vercel.
+2. Create a SerpApi API key.
+3. Vercel -> Project -> Settings -> Environment Variables.
+4. Add: SERPAPI_KEY = your SerpApi key.
+5. Redeploy.
+6. In the app, Model Settings -> Google Live API endpoint stays: /api/google-live
+7. Google Live Traffic page will auto-refresh every 15 minutes by default.
+
+Restaurant Google Place ID is already locked to:
+ChIJmxtIi39rYogRSvt3otrmncA
+The Juicy Seafood and Bar, Huntsville, Alabama.
+
+IMPORTANT:
+- Browser code never contains SERPAPI_KEY.
+- Google data is Google Maps Popular Times/live busyness retrieved server-side through SerpApi.
+- If Google does not return live busyness at a given moment, the app uses typical Popular Times + FZ live operations and clearly shows live unavailable.
