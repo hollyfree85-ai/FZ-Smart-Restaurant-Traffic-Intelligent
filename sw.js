@@ -1,4 +1,4 @@
-const VERSION='2.1.2-quota-safe-6x';
+const VERSION='2.1.3-mobile-scroll';
 const STATIC_CACHE=`fz-traffic-static-${VERSION}`;
 const RUNTIME_CACHE=`fz-traffic-runtime-${VERSION}`;
 const APP_SHELL=[
