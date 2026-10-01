@@ -57,7 +57,7 @@ function normalize(raw) {
     connected: true,
     source: 'Google Maps Popular Times via SerpApi',
     provider: 'serpapi',
-    queryMode: 'data_cid',
+    queryMode: 'place_id',
     placeId: p?.place_id || PLACE.placeId,
     dataCid: p?.data_cid || PLACE.dataCid,
     dataId: p?.data_id || PLACE.dataId,
@@ -88,7 +88,7 @@ function sharedPayload(result) {
     connected: true,
     source: result?.source || 'Google Maps Popular Times via SerpApi',
     provider: 'serpapi',
-    queryMode: 'data_cid',
+    queryMode: 'place_id',
     placeId: result?.placeId || PLACE.placeId,
     dataCid: result?.dataCid || PLACE.dataCid,
     dataId: result?.dataId || PLACE.dataId,
@@ -227,7 +227,8 @@ export default async function handler(req, res) {
   try {
     const u = new URL('https://serpapi.com/search.json');
     u.searchParams.set('engine', 'google_maps');
-    u.searchParams.set('data_cid', PLACE.dataCid);
+    u.searchParams.set('type', 'place');
+    u.searchParams.set('place_id', PLACE.placeId);
     u.searchParams.set('hl', 'en');
     u.searchParams.set('gl', 'us');
     u.searchParams.set('api_key', key);
@@ -248,7 +249,7 @@ export default async function handler(req, res) {
         ok: false,
         connected: false,
         error: raw?.error || `SerpApi HTTP ${r.status}`,
-        queryMode: 'data_cid',
+        queryMode: 'place_id',
         dataCid: PLACE.dataCid
       });
     }
@@ -301,7 +302,7 @@ export default async function handler(req, res) {
       ok: false,
       connected: false,
       error: e?.message || String(e),
-      queryMode: 'data_cid',
+      queryMode: 'place_id',
       dataCid: PLACE.dataCid
     });
   }
