@@ -15,6 +15,9 @@ const SHARED_LAST_GOOD_URL =
 const SHARED_SCHEMA = 'FZ_GOOGLE_POPULAR_TIMES_BASELINE_V2';
 const MAX_SHARED_AGE_MS = 31 * 24 * 60 * 60 * 1000;
 const ARCHIVE_SCAN_LIMIT = 24;
+const KNOWN_GOOD_ARCHIVE_IDS = Object.freeze([
+  '6abe90b8d996126dfbcb075b'
+]);
 
 const n = value => {
   const x = Number(value);
@@ -112,6 +115,8 @@ function baselineOnly(result, extra = {}) {
     sharedSavedAt: Date.now(),
     googleMapsUrl: result?.googleMapsUrl || null,
     searchId: result?.searchId || null,
+    knownGoodSeed: Boolean(result?.knownGoodSeed),
+    seedSearchId: result?.seedSearchId || null,
     ...extra
   };
 }
@@ -191,34 +196,53 @@ function sameRestaurant(raw) {
   return false;
 }
 
+async function recoverArchiveId(key, id, source = 'serpapi-known-good-archive') {
+  try {
+    const u = new URL(`https://serpapi.com/searches/${id}.json`);
+    u.searchParams.set('api_key', key);
+    const r = await fetch(u, { cache: 'no-store', headers: { Accept: 'application/json' } });
+    if (!r.ok) return null;
+    const raw = await r.json().catch(() => null);
+    if (!raw || raw?.search_metadata?.status !== 'Success' || !sameRestaurant(raw)) return null;
+    const x = normalize(raw, 'Google Maps Popular Times recovered from known-good SerpApi Search Archive');
+    if (!hasWeekly(x.weekly)) return null;
+    x.knownGoodSeed = KNOWN_GOOD_ARCHIVE_IDS.includes(id);
+    x.seedSearchId = id;
+    await writeSharedBaseline(x);
+    return baselineOnly(x, {
+      lastKnownGood: true,
+      archiveRecovered: true,
+      knownGoodSeed: x.knownGoodSeed,
+      seedSearchId: id,
+      cacheSource: source
+    });
+  } catch {
+    return null;
+  }
+}
+
 async function recoverFromSerpArchive(key) {
-  // Search Archive retrieval is used as a durable recovery layer. It does not create
-  // a new Google Maps engine search; it retrieves already-created SerpApi results.
+  // First use a known-good Search Archive ID that was manually verified to contain
+  // popular_times for this exact restaurant. Archive retrieval does not create a new
+  // Google Maps engine search, so it does not burn another Maps search just to seed baseline.
+  for (const id of KNOWN_GOOD_ARCHIVE_IDS) {
+    const seeded = await recoverArchiveId(key, id);
+    if (seeded) return seeded;
+  }
+
+  // Secondary best-effort fallback: scan recent SerpApi archive IDs if available.
   try {
     const listUrl = new URL('https://serpapi.com/searches.json');
     listUrl.searchParams.set('api_key', key);
     const lr = await fetch(listUrl, { cache: 'no-store', headers: { Accept: 'application/json' } });
     if (!lr.ok) return null;
     const list = await lr.json().catch(() => null);
-    const ids = extractArchiveIds(list).slice(0, ARCHIVE_SCAN_LIMIT);
+    const ids = extractArchiveIds(list)
+      .filter(id => !KNOWN_GOOD_ARCHIVE_IDS.includes(id))
+      .slice(0, ARCHIVE_SCAN_LIMIT);
     for (const id of ids) {
-      try {
-        const u = new URL(`https://serpapi.com/searches/${id}.json`);
-        u.searchParams.set('api_key', key);
-        const r = await fetch(u, { cache: 'no-store', headers: { Accept: 'application/json' } });
-        if (!r.ok) continue;
-        const raw = await r.json().catch(() => null);
-        if (!raw || raw?.search_metadata?.status !== 'Success' || !sameRestaurant(raw)) continue;
-        const x = normalize(raw, 'Google Maps Popular Times recovered from SerpApi Search Archive');
-        if (hasWeekly(x.weekly)) {
-          await writeSharedBaseline(x);
-          return baselineOnly(x, {
-            lastKnownGood: true,
-            archiveRecovered: true,
-            cacheSource: 'serpapi-archive'
-          });
-        }
-      } catch {}
+      const recovered = await recoverArchiveId(key, id, 'serpapi-archive-scan');
+      if (recovered) return recovered;
     }
   } catch {}
   return null;
@@ -244,6 +268,8 @@ function retainedResponse(base, error, latestAttemptAt = Date.now()) {
     lastKnownGood: true,
     sharedLastGood: Boolean(base.sharedLastGood),
     archiveRecovered: Boolean(base.archiveRecovered),
+    knownGoodSeed: Boolean(base.knownGoodSeed),
+    seedSearchId: base.seedSearchId || null,
     cacheSource: base.cacheSource || 'retained-baseline',
     latestAttemptAt,
     latestAttemptError: error || 'Latest Google check did not include Popular Times.',
