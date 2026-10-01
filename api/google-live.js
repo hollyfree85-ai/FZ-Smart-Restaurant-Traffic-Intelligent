@@ -69,7 +69,11 @@ export default async function handler(req, res) {
 
   // SerpApi itself caches identical queries for up to 1 hour unless no_cache=true.
   // Do not force no_cache here; this protects the user's monthly quota.
-  res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=120');
+  res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+  // Shared Vercel edge cache protects the SerpApi quota across multiple devices.
+  // 85 minutes is shorter than the 2-hour app schedule, so normal scheduled slots can refresh.
+  res.setHeader('CDN-Cache-Control', 'public, s-maxage=5100, stale-while-revalidate=900');
+  res.setHeader('Vercel-CDN-Cache-Control', 'public, s-maxage=5100, stale-while-revalidate=900');
 
   if (req.method !== 'GET') {
     return res.status(405).json({ ok: false, error: 'Method not allowed' });
