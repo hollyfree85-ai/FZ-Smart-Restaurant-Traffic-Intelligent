@@ -1,4 +1,4 @@
-const VERSION='2.3.0-board-realtime';
+const VERSION='2.3.0-persistent-seating-ledger';
 const STATIC_CACHE=`fz-traffic-static-${VERSION}`;
 const RUNTIME_CACHE=`fz-traffic-runtime-${VERSION}`;
 const APP_SHELL=[

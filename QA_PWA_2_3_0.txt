@@ -1,8 +1,33 @@
-PWA 2.3.0 validation
-PASS — Quick Board remains read-only
-PASS — Realtime listener covers current AM board, PM board, current AM/PM archive, tables, and reservations
-PASS — Live event triggers debounced Quick Board live refresh
-PASS — Full forecast data is kept separate from realtime operational data
-PASS — Tables Today and Last 60 Minutes are shown separately
-PASS — Forecast model scheduled refresh remains controlled by liveUpdateMinutes (default 15)
-PASS — Service worker cache namespace bumped to 2.3.0
+FZ Smart Restaurant Traffic Intelligent — PWA 2.3.0 QA
+
+PERSISTENT SEATING LEDGER
+PASS — Traffic totals are separated from live floor occupancy.
+PASS — Occupied Tables / Current Guests remain NOW-only metrics from live table status.
+PASS — Tables Served Today / Guests Served Today use persistent seating events.
+PASS — Last 60 minutes, hourly actual, same-day pace and Forecast-vs-Actual use the same persistent event ledger.
+PASS — Cloud archive source is Quick Board analyticsV1.
+PASS — Current-shift source is rotationBoardV31 seating-turn history.
+PASS — Device continuity ledger retains already-seen events for 180 days and deduplicates by stable seating ID.
+PASS — Synthetic test: 5 live seating events -> live Board cleared + 5 archive events -> still 5.
+PASS — Synthetic transient-gap test: cloud/live empty after prior sync -> local continuity remains 5, with no duplicate IDs.
+
+QUICK BOARD CLEAR SHIFT CONTRACT
+PASS — R3M.8.39 source contains AUTO BEFORE CLEAR SHIFT analytics snapshot write and verification before live Board reset.
+PASS — R3M.8.39 README states persistent analyticsV1 history and analytics survival after Clear Shift.
+
+RETAINED FEATURES
+PASS — Google Popular Times / Live Busyness retained.
+PASS — Last-known-good Google pattern retained when a later fetch omits Popular Times.
+PASS — Quota-safe Google schedule retained: 10:00, 12:00, 14:00, 16:00, 18:00, 20:00 Central Time.
+PASS — Mobile vertical scrolling fixes retained.
+PASS — Operational Quick Board remains read-only from Forecast app.
+
+SYNTAX / INTEGRITY
+PASS — app.js
+PASS — data-adapter.js
+PASS — forecast-engine.js
+PASS — external-signals.js
+PASS — sw.js
+PASS — api/google-live.js
+PASS — package version 2.3.0
+PASS — service-worker cache version 2.3.0

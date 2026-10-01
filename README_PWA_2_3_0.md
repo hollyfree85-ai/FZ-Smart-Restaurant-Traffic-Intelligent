@@ -1,18 +1,17 @@
 # FZ Smart Restaurant Traffic Intelligent — PWA 2.3.0
 
-## Quick Board realtime update
+## Persistent Seating Ledger rebuild
 
-PWA 2.3.0 keeps FZ Quick Board read-only and adds an event-driven Firebase Realtime Database listener. When Quick Board changes (SEAT, Ready/table state, reservation, current AM/PM board, or current archive), the dashboard immediately refreshes live Board data instead of waiting for the 15-minute forecast cycle.
+Traffic counting now follows the same persistence principle as FZ Server Intelligence V1.2.16.
 
-### Dashboard live cards
-- Occupied Tables — realtime Quick Board table state.
-- Current Guests — realtime seated party count.
-- Tables Today — realtime total seating events for the current restaurant date.
-- The Tables Today subtitle also shows Tables in the Last 60 Minutes.
-- Reservations — realtime reservation feed.
+- **Occupied Tables / Current Guests** are live floor NOW metrics from Quick Board table status.
+- **Tables Served Today / Guests Served Today / last 60m / hourly actual / pace / forecast-vs-actual** use a persistent event ledger.
+- Cloud history source: Quick Board `analyticsV1` archive.
+- Current shift source: `rotationBoardV31` seating turns.
+- Device continuity guard: already-seen seating events are retained locally for 180 days and merged by stable event ID.
+- A table becoming Ready does not remove its seating event.
+- Clear Shift does not erase analytics: after the live Board is cleared, archived `analyticsV1` events remain the historical source.
+- Google Popular Times / live busyness and quota-safe schedule from 2.2.0 are retained.
+- Mobile vertical scroll fixes are retained.
 
-### Forecast cadence
-The forecast model remains on its configured interval (default 15 minutes). Realtime Quick Board events update the live operational data immediately; the scheduled forecast refresh remains separate so live operations can move without constantly re-baselining the model. Manual Refresh refreshes both.
-
-### Data source
-FZ Quick Board R3M.8.39 remains read-only. No Quick Board data is written by this app.
+This app remains read-only against operational Quick Board data.
