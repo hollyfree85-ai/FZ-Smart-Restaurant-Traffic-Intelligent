@@ -1,4 +1,4 @@
-const VERSION='2.4.0-local-event-impact';
+const VERSION='2.4.1-shared-google-last-good';
 const STATIC_CACHE=`fz-traffic-static-${VERSION}`;
 const RUNTIME_CACHE=`fz-traffic-runtime-${VERSION}`;
 const APP_SHELL=[

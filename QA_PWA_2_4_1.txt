@@ -1,0 +1,23 @@
+FZ SMART RESTAURANT TRAFFIC INTELLIGENT — PWA 2.4.1 QA
+
+PASS — app.js syntax
+PASS — external-signals.js syntax
+PASS — event-signals.js syntax
+PASS — data-adapter.js syntax
+PASS — forecast-engine.js syntax
+PASS — sw.js syntax
+PASS — api/google-live.js syntax
+PASS — api/local-events.js syntax
+PASS — package / manifest / vercel JSON parse
+PASS — shared Google last-good API test
+  • successful Popular Times result persisted to shared cache
+  • later Google response without Popular Times returned shared last-good
+  • retained response cleared stale liveScore/usualScore/delta
+  • cache_only bootstrap used zero SerpApi calls
+PASS — Google shared cache is outside Quick Board flexibleFloorV1 operational tree
+PASS — existing Local Event Impact API retained
+PASS — existing persistent seating ledger retained
+PASS — existing quota-safe 10/12/2/4/6/8 schedule retained
+
+Production limitation:
+The build container did not write to or mutate production Firebase/SerpApi. The shared cache path is exercised with mocked HTTP in QA; production write permission is verified only after deployment. If production RTDB rules reject the dedicated cache write, fresh Google data still works and the app falls back to its device-local last-good cache.

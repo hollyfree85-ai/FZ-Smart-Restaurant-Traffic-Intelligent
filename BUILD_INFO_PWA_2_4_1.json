@@ -1,0 +1,14 @@
+{
+  "version": "2.4.1",
+  "name": "Shared Google Last-Good Cache",
+  "base": "PWA 2.4.0",
+  "google_shared_cache": {
+    "storage": "Firebase Realtime Database, separate FZ Traffic Intelligence path",
+    "path": "juicyTableLive/JUICY-HUNTSVILLE/fzSmartTrafficIntelligenceV1/googlePopularTimesLastGood",
+    "survives_quick_board_clear_shift": true,
+    "max_age_days": 14,
+    "live_score_retained": false,
+    "popular_times_retained": true,
+    "cache_only_bootstrap_uses_serpapi_quota": false
+  }
+}
