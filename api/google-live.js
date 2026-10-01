@@ -30,9 +30,7 @@ function normalize(raw) {
 
   let current = null;
   for (const rows of Object.values(weekly)) {
-    for (const row of rows) {
-      if (row.current) current = row;
-    }
+    for (const row of rows) if (row.current) current = row;
   }
 
   const liveScore = current?.liveBusynessScore ?? null;
@@ -40,6 +38,7 @@ function normalize(raw) {
 
   return {
     ok: true,
+    connected: true,
     source: 'Google Maps Popular Times via SerpApi',
     provider: 'serpapi',
     queryMode: 'data_cid',
@@ -53,10 +52,7 @@ function normalize(raw) {
     timeSpent: pt?.live_hash?.time_spent || '',
     liveScore,
     usualScore,
-    delta:
-      Number.isFinite(liveScore) && Number.isFinite(usualScore)
-        ? liveScore - usualScore
-        : null,
+    delta: Number.isFinite(liveScore) && Number.isFinite(usualScore) ? liveScore - usualScore : null,
     weekly,
     fetchedAt: Date.now(),
     googleMapsUrl: p?.links?.directions || p?.link || null,
@@ -67,31 +63,30 @@ function normalize(raw) {
 export default async function handler(req, res) {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
-  // SerpApi itself caches identical queries for up to 1 hour unless no_cache=true.
-  // Do not force no_cache here; this protects the user's monthly quota.
-  res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
-  // Shared Vercel edge cache protects the SerpApi quota across multiple devices.
-  // 85 minutes is shorter than the 2-hour app schedule, so normal scheduled slots can refresh.
-  res.setHeader('CDN-Cache-Control', 'public, s-maxage=5100, stale-while-revalidate=900');
-  res.setHeader('Vercel-CDN-Cache-Control', 'public, s-maxage=5100, stale-while-revalidate=900');
-
-  if (req.method !== 'GET') {
-    return res.status(405).json({ ok: false, error: 'Method not allowed' });
-  }
+  if (req.method !== 'GET') return res.status(405).json({ ok: false, error: 'Method not allowed' });
 
   const key = process.env.SERPAPI_KEY;
   if (!key) {
-    return res
-      .status(503)
-      .json({ ok: false, error: 'SERPAPI_KEY is not configured on the server' });
+    return res.status(503).json({
+      ok: false,
+      connected: false,
+      error: 'SERPAPI_KEY is not configured on the server'
+    });
   }
 
-  // Keep the existing frontend compatible. It currently sends place_id,
-  // but the bridge deliberately queries the exact Maps listing via data_cid.
   const requestedPlaceId = String(req.query?.place_id || PLACE.placeId);
   if (requestedPlaceId !== PLACE.placeId) {
-    return res.status(400).json({ ok: false, error: 'Place ID not allowed' });
+    return res.status(400).json({ ok: false, connected: false, error: 'Place ID not allowed' });
   }
+
+  const manual = String(req.query?.manual || '') === '1';
+  const sharedTtl = manual ? 300 : 6300;
+  const cdnPolicy = `public, s-maxage=${sharedTtl}, stale-if-error=604800`;
+
+  res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+  res.setHeader('CDN-Cache-Control', cdnPolicy);
+  res.setHeader('Vercel-CDN-Cache-Control', cdnPolicy);
+  res.setHeader('X-FZ-Google-Cache', manual ? 'manual-shared-5m' : 'scheduled-shared-105m');
 
   try {
     const u = new URL('https://serpapi.com/search.json');
@@ -101,15 +96,14 @@ export default async function handler(req, res) {
     u.searchParams.set('gl', 'us');
     u.searchParams.set('api_key', key);
 
-    const r = await fetch(u, {
-      headers: { Accept: 'application/json' }
-    });
-
+    const r = await fetch(u, { headers: { Accept: 'application/json' } });
     const raw = await r.json().catch(() => ({}));
 
     if (!r.ok || raw?.error) {
-      return res.status(r.ok ? 502 : r.status).json({
+      res.setHeader('Cache-Control', 'no-store');
+      return res.status(503).json({
         ok: false,
+        connected: false,
         error: raw?.error || `SerpApi HTTP ${r.status}`,
         queryMode: 'data_cid',
         dataCid: PLACE.dataCid
@@ -119,24 +113,31 @@ export default async function handler(req, res) {
     const result = normalize(raw);
 
     if (!Object.keys(result.weekly).length) {
-      return res.status(200).json({
+      res.setHeader('Cache-Control', 'no-store');
+      return res.status(503).json({
         ...result,
         ok: false,
-        error:
-          'Exact Google Maps listing connected, but Google did not expose Popular Times for this fetch.',
+        connected: true,
+        error: 'Exact Google Maps listing connected, but Google did not expose Popular Times for this fetch.',
         diagnostics: {
           returnedTitle: raw?.place_results?.title || null,
           returnedPlaceId: raw?.place_results?.place_id || null,
           returnedDataCid: raw?.place_results?.data_cid || null,
-          hasPlaceResults: Boolean(raw?.place_results)
+          hasPlaceResults: Boolean(raw?.place_results),
+          popularTimesPresent: Boolean(raw?.place_results?.popular_times)
         }
       });
     }
 
-    return res.status(200).json(result);
+    return res.status(200).json({
+      ...result,
+      cachePolicy: manual ? 'manual-shared-5m' : 'scheduled-shared-105m'
+    });
   } catch (e) {
-    return res.status(502).json({
+    res.setHeader('Cache-Control', 'no-store');
+    return res.status(503).json({
       ok: false,
+      connected: false,
       error: e?.message || String(e),
       queryMode: 'data_cid',
       dataCid: PLACE.dataCid
