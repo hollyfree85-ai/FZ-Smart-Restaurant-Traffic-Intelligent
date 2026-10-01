@@ -1,4 +1,4 @@
-const VERSION='2.4.2-shared-google-last-good';
+const VERSION='2.5.0-final-google-baseline-lock';
 const STATIC_CACHE=`fz-traffic-static-${VERSION}`;
 const RUNTIME_CACHE=`fz-traffic-runtime-${VERSION}`;
 const APP_SHELL=[
